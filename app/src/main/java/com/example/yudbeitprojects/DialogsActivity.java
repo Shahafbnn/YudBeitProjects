@@ -32,7 +32,7 @@ public class DialogsActivity extends AppCompatActivity implements AdapterView.On
 
     ArrayList<ActivityListViewItem> ArrayListOfItems; // The ArrayList we use to store the names of the items
     ListView listView1; // The ListView that displays the names of the items
-    final Dialogs logs = new Dialogs(this);
+    final Dialogs dialogs = new Dialogs(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +45,11 @@ public class DialogsActivity extends AppCompatActivity implements AdapterView.On
         // 1. Create an ArrayList with all the items
         ArrayListOfItems = new ArrayList<>();
         // Add an item to the list that will run the Runnable method (in the onItemClick method) when clicked
-        ArrayListOfItems.add(new ActivityListViewItem<>("Alert Dialog", (Runnable) this::createAlertDialog));
-        ArrayListOfItems.add(new ActivityListViewItem<>("Custom Dialog", (Runnable) this::createCustomDialog));
-        ArrayListOfItems.add(new ActivityListViewItem<>("Progress Dialog", (Runnable) this::createProgressDialog));
-        ArrayListOfItems.add(new ActivityListViewItem<>("DatePicker Dialog", (Runnable) this::createDatePickerDialog));
-        ArrayListOfItems.add(new ActivityListViewItem<>("TimePicker Dialog", (Runnable) this::createTimePickerDialog));
+        ArrayListOfItems.add(new ActivityListViewItem<>("Alert Dialog", (Runnable) dialogs::createAlertDialog));
+        ArrayListOfItems.add(new ActivityListViewItem<>("Custom Dialog", (Runnable) dialogs::createCustomDialog));
+        ArrayListOfItems.add(new ActivityListViewItem<>("Progress Dialog", (Runnable) dialogs::createProgressDialog));
+        ArrayListOfItems.add(new ActivityListViewItem<>("DatePicker Dialog", (Runnable) dialogs::createDatePickerDialog));
+        ArrayListOfItems.add(new ActivityListViewItem<>("TimePicker Dialog", (Runnable) dialogs::createTimePickerDialog));
 
 
 
@@ -100,111 +100,111 @@ public class DialogsActivity extends AppCompatActivity implements AdapterView.On
 
     }
 
-    public void createAlertDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete Photo");
-        builder.setMessage("Are you sure?");
-        builder.setCancelable(false);
-        builder.setPositiveButton("agree", new AlertDialogClick());
-        builder.setNegativeButton("disagree", new AlertDialogClick());
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.RED);
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GREEN);
-
-
-    }
-    public void createCustomDialog(){
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.custom_layout);
-
-        // Set the custom dialog components - text, image and button
-        Button btnFruitSubmit = dialog.findViewById(R.id.btnFruitSubmit);
-        btnFruitSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                customDialogFruitSubmit(dialog);
-            }
-        });
-        dialog.show();
-//        CustomCelebsDialogClickListener dcl = new CustomCelebsDialogClickListener(dialog);
-//        btnLeeham.setOnClickListener(dcl);
-//        btnGabee.setOnClickListener(dcl);
+//    public void createAlertDialog(){
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Delete Photo");
+//        builder.setMessage("Are you sure?");
+//        builder.setCancelable(false);
+//        builder.setPositiveButton("agree", new AlertDialogClick());
+//        builder.setNegativeButton("disagree", new AlertDialogClick());
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+//        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.RED);
+//        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GREEN);
 //
-//        // Center the dialog on the screen
-//        dialog.getWindow().setGravity(Gravity.CENTER);
-    }
-    public void createProgressDialog(){
-        ProgressDialog progressDialog = ProgressDialog.show(this, "Upload photo", "please wait...", true);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(true);
-    }
-    public void createDatePickerDialog(){
-        final Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String time = "You chose: " + dayOfMonth + "/" + month + "/" + year;
-                Toast myToast = Toast.makeText(getApplicationContext(), time, Toast.LENGTH_LONG);
-                myToast.show();
-            }
-        }, year, month, day);
-
-        //limits to 16 years
-        calendar.add(Calendar.YEAR, -16);
-        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
-        datePickerDialog.show();
-    }
-    public void createTimePickerDialog(){
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-        TimePickerDialog tpd = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String time = "You chose " + String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);
-                Toast myToast = Toast.makeText(getApplicationContext(), time, Toast.LENGTH_LONG);
-                myToast.show();
-            }
-        }, hour, minute, true);
-        tpd.show();
-
-    }
-
-    private class AlertDialogClick implements DialogInterface.OnClickListener {
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            if (which == dialog.BUTTON_POSITIVE) {
-                dialog.dismiss();
-                finish();
-            }
-
-            if (which == dialog.BUTTON_NEGATIVE) {
-                Toast.makeText(getApplicationContext(), "Exit Canceled",
-                        Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            }
-        }
-    }
-
-    private void customDialogFruitSubmit(Dialog dialog){
-        EditText ettFruitName = dialog.findViewById(R.id.ettFruitName);
-        EditText etnFruitQuantity = dialog.findViewById(R.id.etnFruitQuantity);
-        String fruitName = ettFruitName.getText().toString();
-        String fruitQuantity = etnFruitQuantity.getText().toString();
-        Toast myToast;
-
-        if(fruitName.equals("") || fruitQuantity.equals("") || Integer.parseInt(fruitQuantity) <=0) myToast = Toast.makeText(this, "Invalid input", Toast.LENGTH_LONG);
-
-        myToast = Toast.makeText(this, "You chose " + fruitQuantity + " " + fruitName + "(s)", Toast.LENGTH_LONG);
-        myToast.show();
-    }
+//
+//    }
+//    public void createCustomDialog(){
+//        final Dialog dialog = new Dialog(this);
+//        dialog.setContentView(R.layout.custom_layout);
+//
+//        // Set the custom dialog components - text, image and button
+//        Button btnFruitSubmit = dialog.findViewById(R.id.btnFruitSubmit);
+//        btnFruitSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.cancel();
+//                customDialogFruitSubmit(dialog);
+//            }
+//        });
+//        dialog.show();
+////        CustomCelebsDialogClickListener dcl = new CustomCelebsDialogClickListener(dialog);
+////        btnLeeham.setOnClickListener(dcl);
+////        btnGabee.setOnClickListener(dcl);
+////
+////        // Center the dialog on the screen
+////        dialog.getWindow().setGravity(Gravity.CENTER);
+//    }
+//    public void createProgressDialog(){
+//        ProgressDialog progressDialog = ProgressDialog.show(this, "Upload photo", "please wait...", true);
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.setCancelable(true);
+//    }
+//    public void createDatePickerDialog(){
+//        final Calendar calendar = Calendar.getInstance();
+//        int day = calendar.get(Calendar.DAY_OF_MONTH);
+//        int month = calendar.get(Calendar.MONTH);
+//        int year = calendar.get(Calendar.YEAR);
+//
+//        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                String time = "You chose: " + dayOfMonth + "/" + month + "/" + year;
+//                Toast myToast = Toast.makeText(getApplicationContext(), time, Toast.LENGTH_LONG);
+//                myToast.show();
+//            }
+//        }, year, month, day);
+//
+//        //limits to 16 years
+//        calendar.add(Calendar.YEAR, -16);
+//        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+//        datePickerDialog.show();
+//    }
+//    public void createTimePickerDialog(){
+//        final Calendar c = Calendar.getInstance();
+//        int hour = c.get(Calendar.HOUR_OF_DAY);
+//        int minute = c.get(Calendar.MINUTE);
+//        TimePickerDialog tpd = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+//            @Override
+//            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                String time = "You chose " + String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);
+//                Toast myToast = Toast.makeText(getApplicationContext(), time, Toast.LENGTH_LONG);
+//                myToast.show();
+//            }
+//        }, hour, minute, true);
+//        tpd.show();
+//
+//    }
+//
+//    private class AlertDialogClick implements DialogInterface.OnClickListener {
+//
+//        @Override
+//        public void onClick(DialogInterface dialog, int which) {
+//            if (which == dialog.BUTTON_POSITIVE) {
+//                dialog.dismiss();
+//                finish();
+//            }
+//
+//            if (which == dialog.BUTTON_NEGATIVE) {
+//                Toast.makeText(getApplicationContext(), "Exit Canceled",
+//                        Toast.LENGTH_LONG).show();
+//                dialog.dismiss();
+//            }
+//        }
+//    }
+//
+//    private void customDialogFruitSubmit(Dialog dialog){
+//        EditText ettFruitName = dialog.findViewById(R.id.ettFruitName);
+//        EditText etnFruitQuantity = dialog.findViewById(R.id.etnFruitQuantity);
+//        String fruitName = ettFruitName.getText().toString();
+//        String fruitQuantity = etnFruitQuantity.getText().toString();
+//        Toast myToast;
+//
+//        if(fruitName.equals("") || fruitQuantity.equals("") || Integer.parseInt(fruitQuantity) <=0) myToast = Toast.makeText(this, "Invalid input", Toast.LENGTH_LONG);
+//
+//        myToast = Toast.makeText(this, "You chose " + fruitQuantity + " " + fruitName + "(s)", Toast.LENGTH_LONG);
+//        myToast.show();
+//    }
 
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         // When the user clicks on the name of one of the items:

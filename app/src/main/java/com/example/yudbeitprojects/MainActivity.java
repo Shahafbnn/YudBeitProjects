@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayListOfItems.add(new ActivityListViewItem("Dialogs Activity", new Intent(getApplicationContext(),DialogsActivity.class)));
         ArrayListOfItems.add(new ActivityListViewItem("Scroll Activity", new Intent(getApplicationContext(),ScrollActivity.class)));
         ArrayListOfItems.add(new ActivityListViewItem("Main Register Activity", new Intent(getApplicationContext(),MainRegisterActivity.class)));
+        ArrayListOfItems.add(new ActivityListViewItem("Dialogs Menu Activity", new Intent(getApplicationContext(),DialogsMenuActivity.class)));
+
 
 
         //2. Create the Adapter (you can copy this line of code to your project - just change "data" to be the name of your ArrayList)

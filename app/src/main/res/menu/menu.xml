@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="itemDialogOptions"
+    <item android:id="@+id/itemDialogOptions"
         android:title="@string/dialog_options"
         app:showAsAction="never">
 
@@ -30,16 +30,16 @@
     </item>
 
 
-    <item android:id="itemLoginOptions"
+    <item android:id="@+id/itemLoginOptions"
         android:title="@string/login_options"
         app:showAsAction="never">
 
         <menu>
-            <item android:id="@+id/subItemSignUp"
+            <item android:id="@+id/itemSignUp"
                 android:title="Sign Up"/>
-            <item android:id="@+id/subItemSignIn"
+            <item android:id="@+id/itemSignIn"
                 android:title="Sign In"/>
-            <item android:id="@+id/subItemLogIn"
+            <item android:id="@+id/itemLogIn"
                 android:title="Log In"/>
         </menu>
     </item>

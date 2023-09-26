@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">YudBeitProjects</string>
+    <string name="custom_dialog">Custom Dialog</string>
+    <string name="alert_dialog">Alert Dialog</string>
+    <string name="progress_dialog">Progress Dialog</string>
+    <string name="datepicker_dialog">DatePicker Dialog</string>
+    <string name="timepicker_dialog">TimePicker Dialog</string>
+    <string name="login_options">Login Options</string>
+    <string name="dialog_options">Dialog Options</string>
+</resources>

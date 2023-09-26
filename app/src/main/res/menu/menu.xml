@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="itemDialogOptions"
+        android:title="@string/dialog_options"
+        app:showAsAction="never">
+
+        <menu>
+            <item android:id="@+id/itemAlertDialog"
+                android:title="@string/alert_dialog"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/itemCustomDialog"
+                android:title="@string/custom_dialog"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/itemProgressDialog"
+                android:title="@string/progress_dialog"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/itemDatePickerDialog"
+                android:title="@string/datepicker_dialog"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/itemTimePickerDialog"
+                android:title="@string/timepicker_dialog"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+
+
+    <item android:id="itemLoginOptions"
+        android:title="@string/login_options"
+        app:showAsAction="never">
+
+        <menu>
+            <item android:id="@+id/subItemSignUp"
+                android:title="Sign Up"/>
+            <item android:id="@+id/subItemSignIn"
+                android:title="Sign In"/>
+            <item android:id="@+id/subItemLogIn"
+                android:title="Log In"/>
+        </menu>
+    </item>
+</menu>

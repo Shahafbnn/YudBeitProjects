@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayListOfItems.add(new ActivityListViewItem("Scroll Activity", new Intent(getApplicationContext(),ScrollActivity.class)));
         ArrayListOfItems.add(new ActivityListViewItem("Main Register Activity", new Intent(getApplicationContext(),MainRegisterActivity.class)));
         ArrayListOfItems.add(new ActivityListViewItem("Dialogs Menu Activity", new Intent(getApplicationContext(),DialogsMenuActivity.class)));
+        ArrayListOfItems.add(new ActivityListViewItem("Dynamic Button Builder Activity", new Intent(getApplicationContext(),DynamicButtonBuilderActivity.class)));
+
 
 
 

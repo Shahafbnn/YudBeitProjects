@@ -6,12 +6,15 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,13 +45,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public static Object[] validateWeight(String[] weight){
+        //weight is an array to emulate a pointer in C
+        Log.v("weight", "weight before: " + weight[0]);
+
         if (weight[0]==null) return new Object[]{false, "null"};
         if (weight[0].equals("")) return new Object[]{false, "empty"};
+        if(weight[0].contains("-")) return new Object[]{false, "negative or contains -"};
         String[] weightStringArray = weight[0].split("\\.");
-        int dotAmount = weight[0].length() - weightStringArray.length;
-        if(dotAmount > 1) return new Object[]{false, "more than 1 dot"};
+        Log.v("weight", "weightStringArray: " + weightStringArray);
+
+        //int dotAmount = weight[0].length() - weightStringArray.length;
+        //if(dotAmount > 1) return new Object[]{false, "containing more than 1 dot"};
         if (weightStringArray[0].equals("")) weight[0] = "0" + weight[0];
         if (weightStringArray.length >= 2 && weightStringArray[1].equals("")) weight[0] = weight[0] + "0";
+        double weightNum = Double.parseDouble(weightStringArray[0] + "." + weightStringArray[1]);
+        if(weightNum < 20) return new Object[]{false, "smaller than 20kg"};
+        if(weightNum > 300) return new Object[]{false, "larger than 300kg"};
+
         return new Object[]{true};
     }
 
@@ -68,6 +81,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             String[] weightString = new String[]{etndWeight.getText().toString()};
             Object[] weightValidated = validateWeight(weightString);
+            Log.v("weight", "weight after: " + weightString[0]);
+
             if(!(boolean)weightValidated[0]) etndWeight.setError("The text is " + weightValidated[1]);
 
             if((boolean)firstNameValidated[0] && (boolean)lastNameValidated[0] && birthDateValidated && (boolean)weightValidated[0]){

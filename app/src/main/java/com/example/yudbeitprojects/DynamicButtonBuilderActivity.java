@@ -21,26 +21,9 @@ public class DynamicButtonBuilderActivity extends AppCompatActivity {
     public HorizontalScrollView imagesScrollView;
 
 
-    private ImageView createImageView(int id, TextView textView1) {
-        ImageView scrollViewImage = new ImageView(this);
-        scrollViewImage.setImageResource(R.drawable.smileysad);
 
-        scrollViewImage.setVisibility(View.VISIBLE);
-// Set layout parameters to control dimensions
-        LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(
-                100, // Width
-                100  // Height
-        );
-        scrollViewImage.setLayoutParams(imageLayoutParams);
-
-        // Set scale type
-        scrollViewImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-        // Set padding to create spacing
-        scrollViewImage.setPadding(10, 10, 10, 10); // Left, Top, Right, Bottom
-
-        // Set visibility
-        scrollViewImage.setVisibility(View.VISIBLE);
+    private ImageView createScrollImageView(int id, TextView textView1) {
+        ImageView scrollViewImage = DynamicObjectsBuilder.createImageView(this, R.drawable.smileysad, ImageView.ScaleType.CENTER_CROP, 100,100,10,10,10,10);
 
         scrollViewImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,16 +34,14 @@ public class DynamicButtonBuilderActivity extends AppCompatActivity {
 
         return scrollViewImage;
     }
-    private Button createButton(int id, TextView textView1) {
-        Button scrollViewButton = new Button(this);
-        scrollViewButton.setText("" + (id + 1));
-        scrollViewButton.setOnClickListener(new View.OnClickListener() {
+    private Button createScrollButton(int id, TextView textView1) {
+
+        return DynamicObjectsBuilder.createButton(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textView1.setText("Button Number: " + id);
             }
-        });
-        return scrollViewButton;
+        }, "" + (id + 1));
     }
 
         @Override
@@ -70,7 +51,8 @@ public class DynamicButtonBuilderActivity extends AppCompatActivity {
 
         btnBuildClickNum = 0;
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.activity_dynamic_button_builder);
+        LinearLayout linearLayout = findViewById(R.id.activity_dynamic_button_builder);
+        linearLayout.setBackground(getDrawable(R.drawable.planetbackground));
         // Add textview 1
         TextView textView1 = new TextView(this);
         textView1.setText("");
@@ -100,8 +82,8 @@ public class DynamicButtonBuilderActivity extends AppCompatActivity {
 
         //ImageView scrollViewImage;
         for(int i = 0; i < SCROLL_VIEW_ITEMS_NUM; i++){
-            scrollViewLinearLayoutImages.addView(createImageView(i, textView1));
-            scrollViewLinearLayoutButtons.addView(createButton(i, textView1));
+            scrollViewLinearLayoutImages.addView(createScrollImageView(i, textView1));
+            scrollViewLinearLayoutButtons.addView(createScrollButton(i, textView1));
         }
 
         //the button

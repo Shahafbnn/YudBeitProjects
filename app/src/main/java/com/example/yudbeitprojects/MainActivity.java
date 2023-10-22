@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayListOfItems.add(new ActivityListViewItem("Main Register Activity", new Intent(getApplicationContext(),MainRegisterActivity.class)));
         ArrayListOfItems.add(new ActivityListViewItem("Dialogs Menu Activity", new Intent(getApplicationContext(),DialogsMenuActivity.class)));
         ArrayListOfItems.add(new ActivityListViewItem("Dynamic Button Builder Activity", new Intent(getApplicationContext(),DynamicButtonBuilderActivity.class)));
+        ArrayListOfItems.add(new ActivityListViewItem("Dynamic keyboard Builder Activity", new Intent(getApplicationContext(),DynamicKeyboardBuilderActivity.class)));
 
 
 
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView1.setAdapter(adapter);
         listView1.setOnItemClickListener(this);
 
+        // automatically moving to the pre-chosen activity:
+        onItemClick(null, null, ArrayListOfItems.size()-1, 0);
 
     }
 

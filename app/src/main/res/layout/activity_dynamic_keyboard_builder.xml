@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/activity_dynamic_button_builder"
+    android:id="@+id/activity_dynamic_keyboard_builder"
     android:orientation="vertical"
     android:layout_gravity="center">
 </LinearLayout>

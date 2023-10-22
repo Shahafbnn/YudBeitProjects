@@ -21,7 +21,49 @@ public class DynamicButtonBuilderActivity extends AppCompatActivity {
     public HorizontalScrollView imagesScrollView;
 
 
-    @Override
+    private ImageView createImageView(int id, TextView textView1) {
+        ImageView scrollViewImage = new ImageView(this);
+        scrollViewImage.setImageResource(R.drawable.smileysad);
+
+        scrollViewImage.setVisibility(View.VISIBLE);
+// Set layout parameters to control dimensions
+        LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(
+                100, // Width
+                100  // Height
+        );
+        scrollViewImage.setLayoutParams(imageLayoutParams);
+
+        // Set scale type
+        scrollViewImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        // Set padding to create spacing
+        scrollViewImage.setPadding(10, 10, 10, 10); // Left, Top, Right, Bottom
+
+        // Set visibility
+        scrollViewImage.setVisibility(View.VISIBLE);
+
+        scrollViewImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView1.setText("Image Number: " + id);
+            }
+        });
+
+        return scrollViewImage;
+    }
+    private Button createButton(int id, TextView textView1) {
+        Button scrollViewButton = new Button(this);
+        scrollViewButton.setText("" + (id + 1));
+        scrollViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView1.setText("Button Number: " + id);
+            }
+        });
+        return scrollViewButton;
+    }
+
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_button_builder);
@@ -33,8 +75,6 @@ public class DynamicButtonBuilderActivity extends AppCompatActivity {
         TextView textView1 = new TextView(this);
         textView1.setText("");
         linearLayout.addView(textView1);
-
-
 
         //the ScrollView
         buttonsScrollView = new ScrollView(this);
@@ -56,46 +96,12 @@ public class DynamicButtonBuilderActivity extends AppCompatActivity {
         imagesScrollView.setVisibility(ScrollView.GONE);
 
 
-        ImageView scrollViewImage;
-        Button scrollViewButton;
+
+
+        //ImageView scrollViewImage;
         for(int i = 0; i < SCROLL_VIEW_ITEMS_NUM; i++){
-            scrollViewImage = new ImageView(this);
-            scrollViewImage.setImageResource(R.drawable.smileysad);
-
-            scrollViewImage.setVisibility(View.VISIBLE);
-// Set layout parameters to control dimensions
-            LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(
-                    100, // Width
-                    100  // Height
-            );
-            scrollViewImage.setLayoutParams(imageLayoutParams);
-
-            // Set scale type
-            scrollViewImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-            // Set padding to create spacing
-            scrollViewImage.setPadding(10, 10, 10, 10); // Left, Top, Right, Bottom
-
-            // Set visibility
-            scrollViewImage.setVisibility(View.VISIBLE);
-            scrollViewButton = new Button(this);
-            scrollViewButton.setText("" + (i + 1));
-
-            int finalI = i+1; //it's essentially final
-            scrollViewImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    textView1.setText("Image Number: " + finalI);
-                }
-            });
-            scrollViewButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    textView1.setText("Button Number: " + finalI);
-                }
-            });
-            scrollViewLinearLayoutImages.addView(scrollViewImage);
-            scrollViewLinearLayoutButtons.addView(scrollViewButton);
+            scrollViewLinearLayoutImages.addView(createImageView(i, textView1));
+            scrollViewLinearLayoutButtons.addView(createButton(i, textView1));
         }
 
         //the button
@@ -138,4 +144,6 @@ public class DynamicButtonBuilderActivity extends AppCompatActivity {
         linearLayout.addView(imagesScrollView);
 
     }
-}
+
+
+    }
